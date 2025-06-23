@@ -1,56 +1,40 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Ramen Rater</title>
-  <link rel="stylesheet" type="text/css" href="styles.css" />
-  <script defer type="module" src="./src/index.js"></script>
+  <meta charset="UTF-8" />
+  <title>Blog Post Manager</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-
 <body>
-  <header>
-    <h3>Ramen Rater</h3>
-  </header>
+  <h1>Blog Posts</h1>
+  <div id="container" style="display: flex; gap: 20px;">
+    <div id="post-list" style="width: 30%; border-right: 1px solid #ccc; padding-right: 10px;">
+      <!-- Posts titles will go here -->
+    </div>
 
-  
-  <div id="ramen-menu">
-  
+    <div id="post-detail" style="width: 70%; padding-left: 10px;">
+      <!-- Selected post details will go here -->
+      <p>Select a post to see details</p>
+    </div>
   </div>
 
+  <hr />
 
-  <div id="ramen-detail">
-    <img class="detail-image" src="./assets/image-placeholder.jpg" alt="Insert Name Here" />
-    <h2 class="name">Insert Name Here</h2>
-    <h3 class="restaurant">Insert Restaurant Here</h3>
-  </div>
+  <h2>Add New Post</h2>
+  <form id="new-post-form">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" placeholder="Title" required /><br />
 
-  <h3>Rating:</h3>
-  <p>
-    <span id='rating-display'>Insert rating here</span> / 10
-  </p>
-  <h3>Comment:</h3>
-  <p id='comment-display'>
-    Insert comment here
-  </p>
+    <label for="content">Content:</label>
+    <textarea id="content" name="content" placeholder="Content" rows="4" required></textarea><br />
 
+    <label for="author">Author:</label>
+    <input type="text" id="author" name="author" placeholder="Author" required /><br />
 
-  <form id="new-ramen">
-    <h4>Add New Ramen</h4>
-    <label for="new-name">Name: </label>
-    <input type="text" name="name" id="new-name" />
-    <label for="new-restaurant">Restaurant: </label>
-    <input type="text" name="restaurant" id="new-restaurant" />
-    <label for="new-image">Image: </label>
-    <input type="text" name="image" id="new-image" />
-    <label for="new-rating">Rating: </label>
-    <input type="number" name="rating" id="new-rating" />
-    <label for="new-comment">Comment: </label>
-    <textarea name="new-comment" name="new-comment" id="new-comment"></textarea>
-    <input type="submit" id='submit-button' value="Create" />
+    <button type="submit">Add Post</button>
   </form>
 
+  <script src="src/index.js"></script>
 </body>
 
 </html>
-
