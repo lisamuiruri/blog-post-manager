@@ -7,14 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('http://localhost:3000/posts')
       .then(res => res.json())
       .then(posts => {
-        postList.innerHTML = ''; // Clear list
+        postList.innerHTML = '';
         posts.forEach(post => {
-          const postItem = document.createElement('div');
-          postItem.textContent = post.title;
-          postItem.dataset.id = post.id;
-          postItem.style.cursor = 'pointer';
-          postList.appendChild(postItem);
+          const item = document.createElement('div');
+          item.textContent = post.title;
+          item.dataset.id = post.id;
+          item.style.cursor = 'pointer';
+          item.addEventListener('click', () => handlePostClick(post.id));
+          postList.appendChild(item);
         });
+
+        // Show first post by default
+        if (posts.length > 0) {
+          handlePostClick(posts[0].id);
+        }
       });
   }
 
@@ -39,27 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       fetch('http://localhost:3000/posts', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ title, content, author })
       })
-        .then(res => res.json())
-        .then(() => {
-          displayPosts();
-          newPostForm.reset();
-        });
+      .then(res => res.json())
+      .then(() => {
+        newPostForm.reset();
+        displayPosts();
+      });
     });
   }
 
-  // Delegated click listener
-  postList.addEventListener('click', e => {
-    if (e.target.dataset.id) {
-      handlePostClick(e.target.dataset.id);
-    }
-  });
-
-  // Kick things off
   displayPosts();
   addNewPostListener();
 });
-
-
