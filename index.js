@@ -20,8 +20,8 @@ function displayPosts() {
         listDiv.appendChild(postDiv);
       });
 
-      if(posts.length > 0) {
-        // Show details of first post by default
+      if (posts.length > 0) {
+        // Show details of the first post by default
         handlePostClick(posts[0].id);
       }
     })
@@ -54,28 +54,35 @@ function addNewPostListener() {
       author: document.getElementById("author-input").value,
     };
 
-    // For now, add to UI only (not persisted)
-    // Later, we can POST to backend
+    // Send POST request to save new post
+    fetch(baseURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPost),
+    })
+      .then(res => res.json())
+      .then(post => {
+        const listDiv = document.getElementById("post-list");
 
-    // Add new post title to list:
-    const listDiv = document.getElementById("post-list");
+        const postDiv = document.createElement("div");
+        postDiv.textContent = post.title;
+        postDiv.classList.add("post-title");
+        postDiv.dataset.id = post.id;
 
-    const postDiv = document.createElement("div");
-    postDiv.textContent = newPost.title;
-    postDiv.classList.add("post-title");
-    // No ID because not saved to backend yet
-    postDiv.addEventListener("click", () => {
-      const detailDiv = document.getElementById("post-detail");
-      detailDiv.innerHTML = `
-        <h2>${newPost.title}</h2>
-        <p>${newPost.content}</p>
-        <p><em>Author: ${newPost.author}</em></p>
-      `;
-    });
+        postDiv.addEventListener("click", () => {
+          handlePostClick(post.id);
+        });
 
-    listDiv.appendChild(postDiv);
+        listDiv.appendChild(postDiv);
 
-    form.reset();
+        // Optionally show details immediately
+        handlePostClick(post.id);
+
+        form.reset();
+      })
+      .catch(err => console.error("Failed to save post:", err));
   });
 }
 
@@ -85,4 +92,5 @@ function main() {
 }
 
 document.addEventListener("DOMContentLoaded", main);
+
 
