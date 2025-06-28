@@ -2,15 +2,22 @@
   "posts": [
     {
       "id": 1,
-      "title": "My First Post",
-      "content": "Welcome to my first blog post!",
+      "title": "Exploring Nairobi's Coffee Culture",
+      "content": "Nairobi's cafés offer a wide range of locally brewed coffee and vibrant creative spaces. Java House and Artcaffé are local favorites.",
       "author": "Lisa"
     },
     {
       "id": 2,
-      "title": "Learning javascript",
-      "content": "javascript is a powerful language for web development",
-      "author": "Lisa"
+      "title": "Best Place to Watch the Sunset in Kenya",
+      "content": "from the great rift valley escarpment",
+      "author": "Jane"
+    },
+    {
+      "id": 3,
+      "title": "How to Start a Restaurant in Nairobi",
+      "content": "From permits to menus, here's what it takes to launch a successful restaurant business in the capital city.",
+      "author": "David"
     }
   ]
 }
+
