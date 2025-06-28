@@ -2,38 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog Post Manager</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <h1>Blog Posts</h1>
-  <div id="container" style="display: flex; gap: 20px;">
-    <div id="post-list" style="width: 30%; border-right: 1px solid #ccc; padding-right: 10px;">
-      <!-- Posts titles will go here -->
-    </div>
+  <h1>Blog Post Manager</h1>
+  
+  <div id="post-list">
+    <!-- Post titles will go here -->
+  </div>
 
-    <div id="post-detail" style="width: 70%; padding-left: 10px;">
-      <!-- Selected post details will go here -->
-      <p>Select a post to see details</p>
-    </div>
+  <div id="post-detail">
+    <!-- Post details will show here -->
+    <p>Select a post to see details.</p>
   </div>
 
   <hr />
 
-  <h2>Add New Post</h2>
+  <h2>Add a New Post</h2>
   <form id="new-post-form">
-    <label for="title">Title:</label>
-    <input type="text" name="title" id="title" placeholder="Title" autocomplete="on" required />
-
-    <label for="content">Content:</label>
-    <textarea name="content" id="content" placeholder="Content" rows="4" autocomplete="on" required></textarea>
-
-    <label for="author">Author:</label>
-    <input type="text" name="author" id="author" placeholder="Author" autocomplete="on" required />
+    <input type="text" id="title-input" placeholder="Title" required /><br />
+    <input type="text" id="content-input" placeholder="content" required /><br />
+    <input type="text" id="author-input" placeholder="Author" required /><br />
     <button type="submit">Add Post</button>
   </form>
 
   <script src="src/index.js"></script>
 </body>
-
 </html>
+

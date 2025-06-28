@@ -2,15 +2,15 @@
   "posts": [
     {
       "id": 1,
-      "title": "Hello World",
+      "title": "My First Post",
       "content": "Welcome to my first blog post!",
       "author": "Lisa"
     },
     {
       "id": 2,
-      "title": "Second Post",
-      "content": "This is another blog entry.",
-      "author": "Enisa"
+      "title": "Learning javascript",
+      "content": "javascript is a powerful language for web development",
+      "author": "Lisa"
     }
   ]
 }

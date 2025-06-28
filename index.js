@@ -1,63 +1,88 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const postList = document.getElementById('post-list');
-  const postDetail = document.getElementById('post-detail');
-  const newPostForm = document.getElementById('new-post-form');
+const baseURL = "http://localhost:3000/posts";
 
-  function displayPosts() {
-    fetch('http://localhost:3000/posts')
-      .then(res => res.json())
-      .then(posts => {
-        postList.innerHTML = '';
-        posts.forEach(post => {
-          const item = document.createElement('div');
-          item.textContent = post.title;
-          item.dataset.id = post.id;
-          item.style.cursor = 'pointer';
-          item.addEventListener('click', () => handlePostClick(post.id));
-          postList.appendChild(item);
+function displayPosts() {
+  fetch(baseURL)
+    .then(res => res.json())
+    .then(posts => {
+      const listDiv = document.getElementById("post-list");
+      listDiv.innerHTML = ""; // Clear existing list
+
+      posts.forEach(post => {
+        const postDiv = document.createElement("div");
+        postDiv.textContent = post.title;
+        postDiv.classList.add("post-title");
+        postDiv.dataset.id = post.id;
+
+        postDiv.addEventListener("click", () => {
+          handlePostClick(post.id);
         });
 
-        // Show first post by default
-        if (posts.length > 0) {
-          handlePostClick(posts[0].id);
-        }
+        listDiv.appendChild(postDiv);
       });
-  }
 
-  function handlePostClick(id) {
-    fetch(`http://localhost:3000/posts/${id}`)
-      .then(res => res.json())
-      .then(post => {
-        postDetail.innerHTML = `
-          <h2>${post.title}</h2>
-          <p><strong>Author:</strong> ${post.author}</p>
-          <p>${post.content}</p>
-        `;
-      });
-  }
+      if(posts.length > 0) {
+        // Show details of first post by default
+        handlePostClick(posts[0].id);
+      }
+    })
+    .catch(err => console.error("Error fetching posts:", err));
+}
 
-  function addNewPostListener() {
-    newPostForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const title = newPostForm.title.value;
-      const content = newPostForm.content.value;
-      const author = newPostForm.author.value;
+function handlePostClick(id) {
+  fetch(`${baseURL}/${id}`)
+    .then(res => res.json())
+    .then(post => {
+      const detailDiv = document.getElementById("post-detail");
+      detailDiv.innerHTML = `
+        <h2>${post.title}</h2>
+        <p>${post.content}</p>
+        <p><em>Author: ${post.author}</em></p>
+      `;
+    })
+    .catch(err => console.error("Error fetching post detail:", err));
+}
 
-      fetch('http://localhost:3000/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ title, content, author })
-      })
-      .then(res => res.json())
-      .then(() => {
-        newPostForm.reset();
-        displayPosts();
-      });
+function addNewPostListener() {
+  const form = document.getElementById("new-post-form");
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const newPost = {
+      title: document.getElementById("title-input").value,
+      content: document.getElementById("content-input").value,
+      author: document.getElementById("author-input").value,
+    };
+
+    // For now, add to UI only (not persisted)
+    // Later, we can POST to backend
+
+    // Add new post title to list:
+    const listDiv = document.getElementById("post-list");
+
+    const postDiv = document.createElement("div");
+    postDiv.textContent = newPost.title;
+    postDiv.classList.add("post-title");
+    // No ID because not saved to backend yet
+    postDiv.addEventListener("click", () => {
+      const detailDiv = document.getElementById("post-detail");
+      detailDiv.innerHTML = `
+        <h2>${newPost.title}</h2>
+        <p>${newPost.content}</p>
+        <p><em>Author: ${newPost.author}</em></p>
+      `;
     });
-  }
 
+    listDiv.appendChild(postDiv);
+
+    form.reset();
+  });
+}
+
+function main() {
   displayPosts();
   addNewPostListener();
-});
+}
+
+document.addEventListener("DOMContentLoaded", main);
+
